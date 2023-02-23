@@ -1,0 +1,160 @@
+e
+var c
+var p
+#set all 10 gpio to output (including I2C pins)
+set_gpio_cfg 0x3FF 1
+#channel 0, low power mode, 400 Hz BW, potential range -1V to 1V, 5mA fixed CR
+set_pgstat_chan 0
+set_pgstat_mode 2
+set_max_bandwidth 400
+set_pot_range -1 1
+set_cr 5m
+set_autoranging 5m 5m
+cell_on
+#Start Electrode 1 ---------------------------------------  set mux channel
+set_gpio 17i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e1f2 500m #e1f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e1f2 #e1f3 #e1f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 2 ---------------------------------------  set mux channel
+set_gpio 51i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e2f2 500m #e2f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e2f2 #e2f3 #e2f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 3 ---------------------------------------  set mux channel
+set_gpio 85i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e3f2 500m #e3f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e3f2 #e3f3 #e3f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 4 ---------------------------------------  set mux channel
+set_gpio 119i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e4f2 500m #e4f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e4f2 #e4f3 #e4f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 5 ---------------------------------------  set mux channel
+set_gpio 153i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e5f2 500m #e5f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e5f2 #e5f3 #e5f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 6 ---------------------------------------  set mux channel
+set_gpio 187i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e6f2 500m #e6f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e6f2 #e6f3 #e6f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 7 ---------------------------------------  set mux channel
+set_gpio 221i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e7f2 500m #e7f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e7f2 #e7f3 #e7f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Start Electrode 8 ---------------------------------------  set mux channel
+set_gpio 255i
+#let channel settle for a bit after switching
+#set_e -1000m
+wait 100m
+#lsv from -1V to 1V with 25mV steps at scanrate 2V/s
+meas_loop_ca p c #e8f2 500m #e8f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_ca p c #e8f2 #e8f3 #e8f4
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+on_finished:
+cell_off
+

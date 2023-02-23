@@ -1,0 +1,307 @@
+e
+var h
+var r
+var j
+var c
+var p
+var o
+var d
+#set all 10 gpio to output (including I2C pins)
+set_gpio_cfg 0x3FF 1
+set_pgstat_chan 1
+set_pgstat_mode 0
+set_pgstat_chan 0
+set_pgstat_mode 3
+set_max_bandwidth 100k
+set_range_minmax da 0 0
+#Start Electrode 1 ---------------------------------------  set mux channel
+cell_off
+set_gpio 17i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e1f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e1f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e1f3 #e1f5 #e1f6 #e1f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 2 ---------------------------------------  set mux channel
+cell_off
+set_gpio 51i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e2f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e2f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e2f3 #e2f5 #e2f6 #e2f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 3 ---------------------------------------  set mux channel
+cell_off
+set_gpio 85i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e3f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e3f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e3f3 #e3f5 #e3f6 #e3f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 4 ---------------------------------------  set mux channel
+cell_off
+set_gpio 119i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e4f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e4f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e4f3 #e4f5 #e4f6 #e4f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 5 ---------------------------------------  set mux channel
+cell_off
+set_gpio 153i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e5f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e5f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e5f3 #e5f5 #e5f6 #e5f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 6 ---------------------------------------  set mux channel
+cell_off
+set_gpio 187i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e6f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e6f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e6f3 #e6f5 #e6f6 #e6f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 7 ---------------------------------------  set mux channel
+cell_off
+set_gpio 221i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e7f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e7f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e7f3 #e7f5 #e7f6 #e7f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+#Start Electrode 8 ---------------------------------------  set mux channel
+cell_off
+set_gpio 255i
+wait 100m
+#measuring open range potentioal 
+set_range ba 5900u
+set_autoranging ba 5900u 5900u
+set_range ab 4200m
+set_autoranging ab 4200m 4200m
+meas_loop_ocp o 500m 1
+pck_start
+pck_add o
+pck_end
+endloop
+#t-equibrilation 
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+store_var d #e8f2 ab
+add_var d o
+set_e d
+cell_on
+meas_loop_ca p c d 500m #e8f1
+pck_start
+pck_add p
+pck_add c
+pck_end
+endloop
+set_range ba 2950u
+set_autoranging ba 59n 2950u
+meas_loop_eis h r j #e8f3 #e8f5 #e8f6 #e8f4 d
+pck_start
+pck_add h
+pck_add r
+pck_add j
+pck_end
+endloop
+on_finished:
+cell_off
+

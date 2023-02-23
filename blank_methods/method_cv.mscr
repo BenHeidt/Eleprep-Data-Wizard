@@ -1,0 +1,153 @@
+e
+var c
+var p
+#set all 10 gpio to output (including I2C pins)
+set_gpio_cfg 0x3FF 1
+set_pgstat_chan 1
+set_pgstat_mode 0
+set_pgstat_chan 0
+set_pgstat_mode 4
+set_max_bandwidth 200
+set_range_minmax da -1500m 1
+set_range ba 7375n
+set_autoranging ba 59n 2950u
+cell_on
+#Electrode 1 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 17i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e1f2 500m #e1f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e1f2 #e1f3 #e1f4 #e1f5 #e1f6 nscans(#e1f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 2 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 51i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e2f2 500m #e2f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e2f2 #e2f3 #e2f4 #e2f5 #e2f6 nscans(#e2f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 3 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 85i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e3f2 500m #e3f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e3f2 #e3f3 #e3f4 #e3f5 #e3f6 nscans(#e3f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 4 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 119i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e4f2 500m #e4f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e4f2 #e4f3 #e4f4 #e4f5 #e4f6 nscans(#e4f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 5 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 153i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e5f2 500m #e5f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e5f2 #e5f3 #e5f4 #e5f5 #e5f6 nscans(#e5f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 6 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 187i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e6f2 500m #e6f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e6f2 #e6f3 #e6f4 #e6f5 #e6f6 nscans(#e6f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 7 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 221i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e7f2 500m #e7f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e7f2 #e7f3 #e7f4 #e7f5 #e7f6 nscans(#e7f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+#Electrode 8 ------------------------------------------------
+#t-equibrilation is here 
+set_gpio 255i
+#set_e -500m
+wait 100m
+meas_loop_ca p c #e8f2 500m #e8f1
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+meas_loop_cv p c #e8f2 #e8f3 #e8f4 #e8f5 #e8f6 nscans(#e8f7)
+	pck_start
+	pck_add p
+	pck_add c
+	pck_end
+endloop
+on_finished:
+cell_off
+
