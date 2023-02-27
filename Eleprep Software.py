@@ -214,7 +214,8 @@ cMenu.add_command(label='COM8', command=lambda: setcomport("COM8"))
 
 rMenu = Menu(menubar, tearoff= 0)
 menubar.add_cascade(label = 'Monitor', menu= rMenu)
-rMenu.add_command(label = "Plot Results", command =lambda: DAlib.plotResults(dfenddata, usedmethod))
+rMenu.add_command(label = "Voltage vs. Current Plot", command =lambda: DAlib.plotResults(dfenddata, "others"))
+rMenu.add_command(label = "Nyquist Plot", command =lambda: DAlib.plotResults(dfenddata, "eis"))
 
 bMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Developer Tools", menu = bMenu)
