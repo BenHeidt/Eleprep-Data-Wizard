@@ -7,13 +7,13 @@ import matplotlib
 from matplotlib import pyplot as plt 
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 from matplotlib.figure import Figure
 import time 
 import pandas as pd 
 import originpro as op
 from tkinter import filedialog
 import DAlib
-
 # Imports for runMethod: 
 import serial      
 import os.path  
@@ -25,6 +25,13 @@ import csv
 import os
 #changes worling path to filepath why is that even necessary?????????:
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+
+def displayResults(enddata): 
+    monitorWindow = Toplevel()
+    monitorWindow.title("Data Plot")
+    monitorWindow.iconbitmap("ui_graphics/Elepreplogosmall.ico")
 
 
 def bugfixing():
@@ -58,16 +65,6 @@ def safeData(enddata):
             file.write(f"{measurement}\n")
     file.close()
 
-'''def safeDatatoExcel(data):
-    
-    file = filedialog.asksaveasfile(defaultextension='.xlsx')
-    
-    writer = pd.ExcelWriter(file, engine='xlsxwriter')
-
-    for i, sheet in enumerate(data):
-        sheet.to_excel(writer, sheet_name = "Sheet "+str(i+1))
-
-    writer.save()'''
 
 def safeDatatoExcel(data):
     
@@ -114,14 +111,6 @@ def setcomport(useport):
     comport = useport
     print("Comport set to: ")
     print(comport)
-
-
-#saving results in csv 
-'''def saveFile(): 
-    file = filedialog.asksaveasfile(defaultextension='.csv')
-    fileData = measured_current
-    file.write(fileData)
-    file.close'''
 
 
 def safeMethod():
@@ -221,7 +210,8 @@ fileMenu.add_separator()
 fileMenu.add_command(label='Exit', command=quit)
 
 
-eMenu = Menu(menubar, tearoff=0)
+#Multi electrode menue to change nEle settings, deacvtivated for now since running with less than 8 electrodes can cause problems 
+'''eMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Electrodes', menu=eMenu)
 eMenu.add_command(label='1 Electrode', command=lambda: chooseEle(1))
 eMenu.add_command(label='2 Electrodes', command=lambda: chooseEle(2))
@@ -230,7 +220,7 @@ eMenu.add_command(label='4 Electrodes', command=lambda: chooseEle(4))
 eMenu.add_command(label='5 Electrodes', command=lambda: chooseEle(5))
 eMenu.add_command(label='6 Electrodes', command=lambda: chooseEle(6))
 eMenu.add_command(label='7 Electrodes', command=lambda: chooseEle(7))
-eMenu.add_command(label='8 Electrodes', command=lambda: chooseEle(8))
+eMenu.add_command(label='8 Electrodes', command=lambda: chooseEle(8))'''
 
 mMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Method', menu=mMenu)
@@ -249,6 +239,10 @@ cMenu.add_command(label='COM5', command=lambda: setcomport("COM5"))
 cMenu.add_command(label='COM6', command=lambda: setcomport("COM6"))
 cMenu.add_command(label='COM7', command=lambda: setcomport("COM7"))
 cMenu.add_command(label='COM8', command=lambda: setcomport("COM8"))
+
+rMenu = Menu(menubar, tearoff= 0)
+menubar.add_cascade(label = 'Monitor', menu= rMenu)
+rMenu.add_command(label = "Plot Results", command =lambda: DAlib.plotResults(dfenddata, usedmethod))
 
 bMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Developer Tools", menu = bMenu)
@@ -578,8 +572,6 @@ def buttonPress():
     runMethod(".\\used_methods", "current_method.mscr")
     #CheckFileExistAndRename()
     statusChange("Done", "green")
-
-
 
 
     

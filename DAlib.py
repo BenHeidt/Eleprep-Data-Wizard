@@ -1,5 +1,9 @@
 
 import pandas as pd 
+import tkinter as tk
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 def createDataframes(nEle, enddata):
 
@@ -106,6 +110,40 @@ def createDataframes(nEle, enddata):
     return DfEndresults
    
 
+def plotResults(DfToPlot, method):
 
+    if method == "eis":
+        toPlot_x = DfToPlot[-1].iloc[:,1::3]
+        toPlot_y = DfToPlot[-1].iloc[:,2::3]
+        xLabel = "z '"
+        yLabel = "z ''"
+
+
+    else: 
+        toPlot_x = DfToPlot[-1].iloc[:,0::2]
+        toPlot_y= DfToPlot[-1].iloc[:,1::2]
+        xLabel = "Voltage"
+        yLabel = "Current"
+
+
+    fig, ax = plt.subplots()
+
+    labelnumber = 0
+    for col1, col2 in zip(toPlot_x.columns, toPlot_y.columns):
+        labelnumber = labelnumber + 1 
+        ax.plot(toPlot_x[col1], toPlot_y[col2], label = "Electrode " + str(labelnumber))
+
+    ax.set_xlabel(xLabel)
+    ax.set_ylabel(yLabel)
+    ax.legend()
+
+
+    plot_window = tk.Toplevel()
+    plot_window.title('Results')
+    plot_window.iconbitmap("ui_graphics/Elepreplogosmall.ico")
+
+    canvas = FigureCanvasTkAgg(fig, master=plot_window)
+    canvas.draw()
+    canvas.get_tk_widget().pack()
 
 ### .
