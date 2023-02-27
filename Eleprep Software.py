@@ -7,7 +7,6 @@ import matplotlib
 from matplotlib import pyplot as plt 
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 from matplotlib.figure import Figure
 import time 
 import pandas as pd 
@@ -23,7 +22,6 @@ import csv
 
 
 import os
-#changes worling path to filepath why is that even necessary?????????:
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -79,31 +77,6 @@ def safeDatatoExcel(data):
     writer.close()
 
 
-
-
-    ''' for electrode in enddata:
-        eNumber = eNumber+1
-        print(' ')
-        print(' ')
-        print('Electrode '+str(eNumber) + ' Measurements:')
-
-        file.write(' \n')
-        file.write(' \n')
-        file.write('Electrode '+str(eNumber) + ' Measurements: \n')
-
-        #print(electrode)
-        for measurement in electrode:
-            print(measurement)
-            measurement = str(measurement)
-            measurement = measurement[1:-1]
-            file.write(f"{measurement}\n")'''
-
-
-
-
-
-
-
 comport = "COM3"
 
 def setcomport(useport):
@@ -140,8 +113,6 @@ def openMethod():
 
 
 
-
-
 root = Tk()
 root.title("Eleprep Data Wizard")
 root.iconbitmap("ui_graphics/Elepreplogosmall.ico")
@@ -153,7 +124,7 @@ root.iconbitmap("ui_graphics/Elepreplogosmall.ico")
 #Number Electrodes and Fields to be used 
 nEle = 8
 nFields = 10 
-usedmethod = ""
+usedmethod = None
 
 #for drawing the empty graph: 
 applied_potential = []
@@ -204,6 +175,7 @@ menubar.add_cascade(label='File', menu=fileMenu)
 fileMenu.add_command(label='Save Method', command=safeMethod)
 fileMenu.add_command(label='Open and Run Method', command=openMethod)
 fileMenu.add_separator()
+fileMenu.add_command(label = "Plot Results", command =lambda: DAlib.plotResults(dfenddata, usedmethod))
 fileMenu.add_command(label='Safe Data (CSV)', command= lambda: safeData(enddata))
 fileMenu.add_command(label='Safe Data (Excel)', command= lambda: safeDatatoExcel(dfenddata))
 fileMenu.add_separator()
@@ -379,33 +351,6 @@ def createWindow():
         print("in row: " + str(i))
 
 
-#This code is for the internal monitor to display the resulting data, this was deactivated as it takes too much space on the laptop screen
-#additionally, since I changed the resulting data structure to a pandas dataframe (so its compatible with all measurement methods), I have to rewrite this code to work with the df. 
-    ''' 
-    #create and pack monitor 
-    frameMonitor = LabelFrame(root, text = "Monitor")
-    frameMonitor.grid(row=frameMonitorPos["row"], column=frameMonitorPos["col"], pady=15)
-
-
-    #create empty Monitor : 
-    figure1Plot = plt.figure(figsize=(6,4))
-
-    for i in range(nEle):
-        plt.plot(applied_potential[i],measured_current[i])
-    
-    plt.title("Voltammogram")
-    plt.xlabel("Applied Potential (V)")
-    plt.ylabel("Measured Current (A)")
-    plt.grid(b=True, which='major')
-    plt.grid(b=True, which='minor', color='b', linestyle='-', alpha=0.2)
-    plt.minorticks_on()
-    plt.tight_layout()
-
-    chart = FigureCanvasTkAgg(figure1Plot, frameMonitor)
-    chart.get_tk_widget().grid(row=8, column =2)
-    '''
-
-
     #Create and pack button to start measurement 
     frameButton = LabelFrame(root)
     frameButton.grid(row = frameButtonPos["row"], column= frameButtonPos["col"], pady=15)
@@ -494,34 +439,6 @@ def runMethod(MSfilepath, MScriptFile):
     ResultColumn2 = [] #Current or Zi
     ResultColumn3 = [] #Zr
 
-'''
-    print(range(nCurves))
-    for i in range(nCurves):
-
-        ResultColumn1.append(PSEsPicoLib.GetColumnFromMatrix(value_matrix,0,i)) #Get the applied potentials or the frequency
-        ResultColumn2.append(PSEsPicoLib.GetColumnFromMatrix(value_matrix,1,i))  #Get the measured current or Zi
-        ResultColumn3.append(PSEsPicoLib.GetColumnFromMatrix(value_matrix,2,i)) #get Zr
-
-
-
-
-    figure1Plot = plt.figure(figsize=(6,4))
-
-    for i in range(nCurves):
-        plt.plot(applied_potential[i],measured_current[i])
-    
-    plt.title("Voltammogram")
-    plt.xlabel("Applied Potential (V)")
-    plt.ylabel("Measured Current (A)")
-    plt.grid(b=True, which='major')
-    plt.grid(b=True, which='minor', color='b', linestyle='-', alpha=0.2)
-    plt.minorticks_on()
-    plt.tight_layout()
-
-    chart = FigureCanvasTkAgg(figure1Plot, frameMonitor)
-    chart.get_tk_widget().grid(row=8, column =2)
-
-'''
 
 
 #Get the inserted data and write it in an array
