@@ -33,9 +33,8 @@ def displayResults(enddata):
 
 
 def bugfixing():
-    print(enddata)
-    print("First entry is: ")
-    print(enddata[0][0])
+    print("")
+
 
 
 
@@ -64,8 +63,8 @@ def safeData(enddata):
     file.close()
 
 
-def safeDatatoExcel(data):
-    
+def safeDatatoExcel(data, wPlot):
+
     file_path = filedialog.asksaveasfilename(defaultextension='.xlsx', filetypes=[('Excel Files', '*.xlsx')])
     
     writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
@@ -75,6 +74,12 @@ def safeDatatoExcel(data):
 
     writer.save()
     writer.close()
+
+    if wPlot == None:
+        pass
+
+    else: 
+        DAlib.safePlot(data, wPlot, file_path) 
 
 
 comport = "COM3"
@@ -177,7 +182,13 @@ fileMenu.add_command(label='Open and Run Method', command=openMethod)
 fileMenu.add_separator()
 fileMenu.add_command(label = "Plot Results", command =lambda: DAlib.plotResults(dfenddata, usedmethod))
 fileMenu.add_command(label='Safe Data (CSV)', command= lambda: safeData(enddata))
-fileMenu.add_command(label='Safe Data (Excel)', command= lambda: safeDatatoExcel(dfenddata))
+
+subMenu = Menu(fileMenu, tearoff = 0)
+fileMenu.add_cascade(label = "Safe Data (Excel)", menu=subMenu)
+
+subMenu.add_command(label='Data Only', command= lambda: safeDatatoExcel(dfenddata, None))
+subMenu.add_command(label='Data with C/V Plot', command= lambda: safeDatatoExcel(dfenddata, "else"))
+subMenu.add_command(label='Data with Nyquist Plot', command= lambda: safeDatatoExcel(dfenddata, "eis"))
 fileMenu.add_separator()
 fileMenu.add_command(label='Exit', command=quit)
 
