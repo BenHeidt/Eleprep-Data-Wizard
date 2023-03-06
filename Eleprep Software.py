@@ -19,7 +19,7 @@ import os.path
 import PSEsPicoLib 
 import matplotlib.pyplot as plt
 import csv
-
+import winsound
 
 import os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -217,10 +217,11 @@ menubar.add_cascade(label = 'Monitor', menu= rMenu)
 rMenu.add_command(label = "Voltage vs. Current Plot", command =lambda: DAlib.plotResults(dfenddata, "others"))
 rMenu.add_command(label = "Nyquist Plot", command =lambda: DAlib.plotResults(dfenddata, "eis"))
 
+'''
 bMenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Developer Tools", menu = bMenu)
 bMenu.add_command(label="Bugfix Function", command=bugfixing)
-
+'''
 
 #Create Base Frame Architecture: ____________________________________________________________________________________________________
 #Frame Positions: 
@@ -490,6 +491,7 @@ def buttonPress():
     runMethod(".\\used_methods", "current_method.mscr")
     #CheckFileExistAndRename()
     statusChange("Done", "green")
+    winsound.MessageBeep()
 
 
     
