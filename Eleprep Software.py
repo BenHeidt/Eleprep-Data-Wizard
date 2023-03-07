@@ -26,17 +26,14 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 
-def displayResults(enddata): 
-    monitorWindow = Toplevel()
-    monitorWindow.title("Data Plot")
-    monitorWindow.iconbitmap("ui_graphics/Elepreplogosmall.ico")
+
 
 
 def bugfixing():
     print("")
 
 
-
+#Safe Data and Bugfixing 
 
 def safeData(enddata):
 
@@ -96,6 +93,9 @@ def safeDatatoExcel(data, wPlot, lastload):
 
 
 comport = "COM3"
+
+
+# Open and Safe Method 
 
 def setcomport(useport):
     global comport
@@ -455,20 +455,6 @@ def runMethod(MSfilepath, MScriptFile):
     dfenddata= DAlib.createDataframes(nEle, enddata)
     
     
-    
-    
-    #New plitting code for graphs in one window: 
-
-    frameMonitor.destroy()
-    frameMonitor = LabelFrame(root, text = "Monitor")
-    frameMonitor.grid(row=frameMonitorPos["row"], column=frameMonitorPos["col"],pady=15)
-
-
-
-    ResultColumn1 = [] #Potential or Frequency 
-    ResultColumn2 = [] #Current or Zi
-    ResultColumn3 = [] #Zr
-
 
 
 #Get the inserted data and write it in an array
