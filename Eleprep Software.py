@@ -198,7 +198,6 @@ menubar.add_cascade(label='File', menu=fileMenu)
 fileMenu.add_command(label='Save Method', command=safeMethod)
 fileMenu.add_command(label='Open and Run Method', command=openMethod)
 fileMenu.add_separator()
-fileMenu.add_command(label = "Plot Results", command =lambda: DAlib.plotResults(dfenddata, usedmethod))
 fileMenu.add_command(label='Safe Data (CSV)', command= lambda: safeData(enddata))
 
 subMenu = Menu(fileMenu, tearoff = 0)
