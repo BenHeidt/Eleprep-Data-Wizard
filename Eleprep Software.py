@@ -63,10 +63,13 @@ def safeData(enddata):
     file.close()
 
 
-def safeDatatoExcel(data, wPlot):
+def safeDatatoExcel(data, wPlot, lastload):
 
     file_path = filedialog.asksaveasfilename(defaultextension='.xlsx', filetypes=[('Excel Files', '*.xlsx')])
-    
+
+    print(file_path)
+
+     
     writer = pd.ExcelWriter(file_path, engine='xlsxwriter')
 
     for i, sheet in enumerate(data):
@@ -80,6 +83,16 @@ def safeDatatoExcel(data, wPlot):
 
     else: 
         DAlib.safePlot(data, wPlot, file_path) 
+
+    #Adds the method to the sheet, if the text was inserted by hand it uses the current_method file, if a method file was loaded it uses that one 
+
+    if lastload == None:
+      
+        DAlib.safeMethodtoExcel(file_path, "used_methods/current_method.mscr")
+
+    else: 
+        DAlib.safeMethodtoExcel(file_path, lastload)
+
 
 
 comport = "COM3"
@@ -105,8 +118,11 @@ def safeMethod():
     file.write(filedata)
     file.close()
 
-    
+#this value tells the program if a method was loaded or entered manually 
+lastload = None
+
 def openMethod():
+    global lastload
     global frameStatus
     filepath = filedialog.askopenfilename(filetypes= [("Methodscript Files", ".mscr")])
     print(filepath)
@@ -114,7 +130,9 @@ def openMethod():
     print(openLocationAndName[0])
     print(openLocationAndName[1])
     runMethod(openLocationAndName[0],openLocationAndName[1])
+    lastload = filepath
     statusChange("Done", "green")
+    
 
 
 
@@ -186,9 +204,9 @@ fileMenu.add_command(label='Safe Data (CSV)', command= lambda: safeData(enddata)
 subMenu = Menu(fileMenu, tearoff = 0)
 fileMenu.add_cascade(label = "Safe Data (Excel)", menu=subMenu)
 
-subMenu.add_command(label='Data Only', command= lambda: safeDatatoExcel(dfenddata, None))
-subMenu.add_command(label='Data with C/V Plot', command= lambda: safeDatatoExcel(dfenddata, "else"))
-subMenu.add_command(label='Data with Nyquist Plot', command= lambda: safeDatatoExcel(dfenddata, "eis"))
+subMenu.add_command(label='Data Only', command= lambda: safeDatatoExcel(dfenddata, None, lastload))
+subMenu.add_command(label='Data with C/V Plot', command= lambda: safeDatatoExcel(dfenddata, "else", lastload))
+subMenu.add_command(label='Data with Nyquist Plot', command= lambda: safeDatatoExcel(dfenddata, "eis", lastload))
 fileMenu.add_separator()
 fileMenu.add_command(label='Exit', command=quit)
 
@@ -457,6 +475,7 @@ def runMethod(MSfilepath, MScriptFile):
 #Get the inserted data and write it in an array
  
 def getSettings(): 
+    global lastload
     emptyfields=0
     #creating array for input Values 
     settingValues = []
@@ -477,6 +496,7 @@ def getSettings():
                 emptyfields = emptyfields+1
     if emptyfields !=0:
         messagebox.showwarning("Error", "Not all fields filled!")
+        return
     
     
     #Open the blank file 
@@ -494,6 +514,8 @@ def getSettings():
     #safe as output file
     with open('used_methods/current_method.mscr', 'w') as file:
         file.write(filedata)
+
+    lastload = None
 
 
 def buttonPress():

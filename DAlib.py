@@ -4,6 +4,7 @@ import tkinter as tk
 import os
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import openpyxl
 
 def createDataframes(nEle, enddata):
 
@@ -180,6 +181,23 @@ def safePlot(DfToPlot, method, Excelpath):
     Plotpath = os.path.join(directory, os.path.splitext(filename)[0] + '.png')
     fig.savefig(Plotpath)
 
+def safeMethodtoExcel(excelPath, textPath):
+
+    # Load the text file
+    with open(textPath, 'r') as f:
+        text_content = f.read()
+    
+    # Load the Excel file
+    workbook = openpyxl.load_workbook(excelPath)
+    
+    # Add a new worksheet named "Method"
+    worksheet = workbook.create_sheet("Method")
+    
+    # Write the text content to the worksheet
+    worksheet['A1'] = text_content
+    
+    # Save the changes to the Excel file
+    workbook.save(excelPath)
 
 
 
