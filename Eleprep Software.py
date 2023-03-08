@@ -27,8 +27,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 
-
-
 def bugfixing():
     print("")
 
@@ -139,6 +137,7 @@ def openMethod():
 root = Tk()
 root.title("Eleprep Data Wizard")
 root.iconbitmap("ui_graphics/Elepreplogosmall.ico")
+root.configure(borderwidth=20)
 
 #root.resizable(width=False, height=False)
 
@@ -166,10 +165,10 @@ nFieldsForMethods = {
 
 
 fieldDescription = {
-        "ca" : [" ", "t equibrilation", "E dc", "t interval", "t run"],
-        "cv" : [" ", "t equibrilation", "E begin", "E vertex 1", "E vertex 2", "E step", "Scan rate", "Number scans"],
-        "eis": [" ","t equibrilation", "E dc", "E ac", "n frequencies", "Max. frequency", "Min. freqnency", "t Max. OCP"],
-        "lsv": [" ","Lower Boundry", "Higher Boundry", "E step", "Scan rate"]
+        "ca" : ["t equibrilation", "E dc", "t interval", "t run"],
+        "cv" : ["t equibrilation", "E begin", "E vertex 1", "E vertex 2", "E step", "Scan rate", "Number scans"],
+        "eis": ["t equibrilation", "E dc", "E ac", "n frequencies", "Max. frequency", "Min. freqnency", "t Max. OCP"],
+        "lsv": ["Lower Boundry", "Higher Boundry", "E step", "Scan rate"]
     }
 
 choiceofblank = { 
@@ -254,31 +253,38 @@ bMenu.add_command(label="Bugfix Function", command=bugfixing)
 #Create Base Frame Architecture: ____________________________________________________________________________________________________
 #Frame Positions: 
 
-frameHeaderPos={"row":0, "col":2}
-frameElectrodesPos={"row":1, "col":2}
+frameHeaderPos={"row":0, "col":3}
+
 frameDescriptionPos={"row":1, "col":1}
-frameButtonPos={"row":4,"col":2}
-frameMonitorPos={"row":2, "col":2}
-frameStatusPos={"row":3, "col":2}
+frameCheckboxPos = {"row":1, "col":2}
+frameElectrodesPos={"row":1, "col":3}
+frameAlignmentPos={"row":1, "col":3}
 
 
-frameHeader = LabelFrame(root,borderwidth=0, highlightthickness=0)
-frameHeader.grid(row=frameHeaderPos["row"], column=frameHeaderPos["col"], pady=30)
+frameStatusPos={"row":3, "col":3}
+frameButtonPos={"row":4,"col":3}
 
-frameDescription = LabelFrame(root, text = "Description")
-frameDescription.grid(row=frameDescriptionPos["row"],column=frameDescriptionPos["col"])
 
-frameElectrodes = LabelFrame(root, text="Electrodes", borderwidth=0,highlightthickness=0)
-frameElectrodes.grid(row=frameElectrodesPos["row"],column=frameElectrodesPos["col"], padx=20, pady=20)
+frameHeader = LabelFrame(root)
+frameHeader.grid(row=frameHeaderPos["row"], column=frameHeaderPos["col"])
 
-frameMonitor = LabelFrame(root, text= "Monitor")
-frameMonitor.grid(row=frameMonitorPos["row"], column=frameMonitorPos["col"], pady = 15)
+frameElectrodes = LabelFrame(root, text="Electrodes")
+frameElectrodes.grid(row=frameElectrodesPos["row"],column=frameElectrodesPos["col"])
+
+frameForElectrodeAlignment = LabelFrame(root, text="Alignment")
+frameForElectrodeAlignment.grid(row=frameAlignmentPos["row"], columns = frameAlignmentPos["col"])
 
 frameStatus = LabelFrame(root, text= "Status")
 frameStatus.grid(row=frameStatusPos["row"], column=frameStatusPos["col"])
 
 StatusLabel = Label(frameStatus, text = "Choosing Method")
 StatusLabel.pack()
+
+frameDescription = LabelFrame(frameForElectrodeAlignment, text = "Description")
+frameDescription.grid(row=frameDescriptionPos["row"],column=frameDescriptionPos["col"])
+
+frameCheckbox = LabelFrame(frameForElectrodeAlignment, text = "Static")
+frameCheckbox.grid(row = frameCheckboxPos["row"], column= frameCheckboxPos["col"])
 
 #create and pack Header
 logobig = ImageTk.PhotoImage(Image.open("ui_graphics/Logobig.png"))
@@ -327,32 +333,40 @@ def createWindow():
     #destroy and recreate old frames to update information 
     global frameElectrodes
     global frameDescription
+    global frameCheckbox
+    global frameForElectrodeAlignment
     global allColummns
-    global frameMonitor
     global frameStatus
     global frameButton
     global applied_potential
     global measured_current
+    global staticBoxes
 
     frameElectrodes.destroy()
     frameDescription.destroy()
+    frameCheckbox.destroy()
+    frameForElectrodeAlignment.destroy()
 
-    frameDescription = LabelFrame(root, text = "Settings")
-    frameDescription.grid(row=frameDescriptionPos["row"],column=frameDescriptionPos["col"], sticky='nsew')
+    frameForElectrodeAlignment = LabelFrame(root, text="Alignment", fg=root.cget('bg'),borderwidth=0, highlightthickness=0)
+    frameForElectrodeAlignment.grid(row=frameAlignmentPos["row"], columns = frameAlignmentPos["col"])
+
+
+    frameDescription = LabelFrame(frameForElectrodeAlignment, text = "Settings")
+    frameDescription.grid(row=0,column=1, sticky='nsew')
     
     frameElectrodes = LabelFrame(root, text="Electrodes",borderwidth=0,highlightthickness=0)
-    frameElectrodes.grid(row=frameElectrodesPos["row"],column=frameElectrodesPos["col"], padx=20)
+    frameElectrodes.grid(row=frameElectrodesPos["row"],column=frameElectrodesPos["col"])
+
+    frameCheckbox = LabelFrame(frameForElectrodeAlignment, text = "Static")
+    frameCheckbox.grid(row = 0, column= 0)
 
      #Create Status 
     statusChange("Idle", "green")
 
-    #placeholder item
 
-    Label(text="    ").grid(row=1, column=0)
-     #Label(text="   ").grid(row= frameElectrodesPos["row"]+1,pady=30)
  
     
-    #create Frames #Pack Frames 
+    #create Frames in Electrodes frame #Pack Frames 
 
     allFrames=[]
     for i in range(nEle):
@@ -372,13 +386,20 @@ def createWindow():
             allColummns[n].append(Entry(allFrames[n], width=10))
             allColummns[n][i].grid(row=i, column = 1, pady=5, padx=25)
 
-    
-    #Create and pack field descriptions 
-    for i in range(nFields+1):
-        description = Label(frameDescription, text = fieldDescription[usedmethod][i], pady=4)
+    staticBoxes = []
+
+    #Create and pack field descriptions and checkboxes 
+    for i in range(nFields):
+        description = Label(frameDescription, text = fieldDescription[usedmethod][i], pady=5)
         description.grid(row=i,column =0)
         print(fieldDescription[usedmethod][i])
         print("in row: " + str(i))
+
+    for i in range(nFields):
+        boxvar = BooleanVar()
+        field_checkbox = Checkbutton(frameCheckbox, variable=boxvar, pady=3)
+        field_checkbox.pack()
+        staticBoxes.append(boxvar)
 
 
     #Create and pack button to start measurement 
@@ -461,28 +482,43 @@ def runMethod(MSfilepath, MScriptFile):
  
 def getSettings(): 
     global lastload
+    global emptyfields
+
+    #check static tickbox and fill in list that tells if its ticked
+    staticTick = []
+    for i, var in enumerate(staticBoxes):
+        staticTick.append(var.get())
+
+
     emptyfields=0
     #creating array for input Values 
     settingValues = []
     for i in range(nEle):
         settingValues.append([])
 
-    #sampling the entries and putting them into the field 
+    #sampling the entries and putting them into the list 
     for n in range(nEle):
         for i in range(nFields):
             
-            settingValues[n].append(allColummns[n][i].get())
+            if staticTick[i] == True: #Checks if the keep static tickbox is active in the field-row, then either fills in the first column entry or the current column entry
 
+                settingValues[n].append(allColummns[0][i].get())
+
+            else:               
+                settingValues[n].append(allColummns[n][i].get())
+    
     #check if all fields are filled
     for n in range(nEle):
         for i in range(nFields):
             
             if len(settingValues[n][i]) == 0:
                 emptyfields = emptyfields+1
+
     if emptyfields !=0:
         messagebox.showwarning("Error", "Not all fields filled!")
+        winsound.MessageBeep(winsound.MB_ICONHAND)
         return
-    
+
     
     #Open the blank file 
     with open(choiceofblank[usedmethod], 'r') as file: 
@@ -503,13 +539,19 @@ def getSettings():
     lastload = None
 
 
+    
 def buttonPress():
     global frameStatus
     getSettings()
+
+    if emptyfields !=0:
+        return
+
     runMethod(".\\used_methods", "current_method.mscr")
-    #CheckFileExistAndRename()
     statusChange("Done", "green")
     winsound.MessageBeep()
+
+
 
 
     
