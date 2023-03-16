@@ -265,13 +265,13 @@ frameStatusPos={"row":3, "col":3}
 frameButtonPos={"row":4,"col":3}
 
 
-frameHeader = LabelFrame(root)
+frameHeader = LabelFrame(root, borderwidth=0, highlightthickness=0)
 frameHeader.grid(row=frameHeaderPos["row"], column=frameHeaderPos["col"])
 
 frameElectrodes = LabelFrame(root, text="Electrodes")
 frameElectrodes.grid(row=frameElectrodesPos["row"],column=frameElectrodesPos["col"])
 
-frameForElectrodeAlignment = LabelFrame(root, text="Alignment")
+frameForElectrodeAlignment = LabelFrame(root, borderwidth=0, highlightthickness=0)
 frameForElectrodeAlignment.grid(row=frameAlignmentPos["row"], columns = frameAlignmentPos["col"])
 
 frameStatus = LabelFrame(root, text= "Status")
